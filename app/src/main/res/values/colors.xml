@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="windowBackground">#f2f2f2</color>
+
+    <color name="home_tab_background">#2d2d2d</color>
+
+    <color name="primaryGreen">#a0d468</color>
+    <color name="primaryGreenPre">#8cc152</color>
+    <color name="primaryBlue">#4fc1e9</color>
+    <color name="primaryBluePre">#3bafda</color>
+    <color name="primaryBlack">#2D2C32</color>
+    <color name="primaryBlackPre">#aa262931</color>
+    <color name="primaryBlackGray">#656D78</color>
+    <color name="primaryGray">#777777</color>
+    <color name="primaryGrayPre">#aa777777</color>
+    <color name="primaryGrayLine">#999999</color>
+    <color name="primaryGrayTrans">#bb777777</color>
+    <color name="primaryRed">#fc6e51</color>
+    <color name="primaryRedPre">#aafc6e51</color>
+    <color name="primaryDivider">#bbbbbb</color>
+    <color name="primaryCoffee">#765039</color>
+    <color name="primaryHintColor">#bbbbbb</color>
+
+
+</resources>
