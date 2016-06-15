@@ -38,4 +38,6 @@ public class BaseFragment extends com.kimson.library.ui.fragment.BaseFragment{
             mProgressDialog.dismiss();
         }
     }
+
+
 }

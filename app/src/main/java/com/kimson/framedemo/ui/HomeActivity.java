@@ -1,11 +1,15 @@
 package com.kimson.framedemo.ui;
 
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.kimson.framedemo.ui.fragment.HomeTabHomeFragment;
+import com.kimson.framedemo.ui.widget.BottomBarController;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
@@ -13,22 +17,21 @@ import com.kimson.framedemo.R;
 import com.kimson.framedemo.ui.fragment.HomeTabBookingFragment;
 import com.kimson.framedemo.ui.fragment.HomeTabMeFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
     private BottomBar mBottomBar;
-    private TextView mMessageView;
+    private BottomBarController bottomBarController;
 
-
-    private HomeTabHomeFragment homeFragment;
-    private HomeTabBookingFragment bookingFragment;
-    private HomeTabMeFragment meFragment;
+    private final int INDEX_HOME = BottomBarController.TAB1;
+    private final int INDEX_BOOKING = BottomBarController.TAB2;
+    private final int INDEX_ME = BottomBarController.TAB3;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Necessary to restore the BottomBar's state, otherwise we would
-        // lose the current tab on orientation change.
-
-        mBottomBar.onSaveInstanceState(outState);
+        bottomBarController.onSaveInstanceState(outState);
     }
 
     @Override
@@ -36,50 +39,36 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mMessageView = (TextView) findViewById(R.id.messageView);
+        List<Fragment> fragments = new ArrayList<>(3);
+        fragments.add(HomeTabHomeFragment.newInstance("Home"));
+        fragments.add(HomeTabBookingFragment.newInstance("Booking"));
+        fragments.add(HomeTabMeFragment.newInstance("Me"));
 
-        homeFragment = HomeTabHomeFragment.newInstance();
-        bookingFragment = HomeTabBookingFragment.newInstance();
-        meFragment = HomeTabMeFragment.newInstance();
 
+        bottomBarController = new BottomBarController(savedInstanceState, getSupportFragmentManager(), R.id.container, fragments);
         mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.useDarkTheme();
         mBottomBar.setItemsFromMenu(R.menu.bottom_bar, new OnMenuTabClickListener() {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {
-                mMessageView.setText(getMessage(menuItemId, false));
+                switch (menuItemId) {
+                    case R.id.home_home:
+                        bottomBarController.switchTab(INDEX_HOME);
+                        break;
+                    case R.id.home_book:
+                        bottomBarController.switchTab(INDEX_BOOKING);
+                        break;
+                    case R.id.home_me:
+                        bottomBarController.switchTab(INDEX_ME);
+                        break;
+                }
             }
 
             @Override
             public void onMenuTabReSelected(@IdRes int menuItemId) {
-
+                bottomBarController.clearStack();
             }
         });
-
-        mBottomBar.mapColorForTab(1, 0xFF5D4037);
-        mBottomBar.mapColorForTab(2, "#7B1FA2");
     }
-
-    private String getMessage(int menuItemId, boolean isReselection) {
-        String message = "Content for ";
-
-        switch (menuItemId) {
-            case R.id.home_home:
-                message += "home";
-                break;
-            case R.id.home_book:
-                message += "book";
-                break;
-            case R.id.home_me:
-                message += "me";
-                break;
-        }
-
-        if (isReselection) {
-            message += " WAS RESELECTED! YAY!";
-        }
-
-        return message;
-    }
-
 
 }
