@@ -1,5 +1,6 @@
 package com.kimson.framedemo;
 
+import com.facebook.stetho.Stetho;
 import com.kimson.library.Application;
 
 /**
@@ -10,5 +11,7 @@ public class AppContext extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        // Stetho
+        Stetho.initializeWithDefaults(getApplicationContext());
     }
 }

@@ -2,14 +2,13 @@ package com.kimson.framedemo.ui;
 
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
+import com.kimson.framedemo.ui.base.BaseActivity;
 import com.kimson.framedemo.ui.fragment.HomeTabHomeFragment;
 import com.kimson.framedemo.ui.widget.BottomBarController;
+import com.kimson.library.bind.ViewById;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
@@ -20,7 +19,11 @@ import com.kimson.framedemo.ui.fragment.HomeTabMeFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
+
+    @ViewById(R.id.toolbar)
+    private Toolbar mToolbar;
+
     private BottomBar mBottomBar;
     private BottomBarController bottomBarController;
 
@@ -38,12 +41,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(null);
+        mToolbar.setNavigationIcon(null);
 
         List<Fragment> fragments = new ArrayList<>(3);
-        fragments.add(HomeTabHomeFragment.newInstance("Home"));
+        fragments.add(HomeTabHomeFragment.newInstance());
         fragments.add(HomeTabBookingFragment.newInstance("Booking"));
         fragments.add(HomeTabMeFragment.newInstance("Me"));
-
 
         bottomBarController = new BottomBarController(savedInstanceState, getSupportFragmentManager(), R.id.container, fragments);
         mBottomBar = BottomBar.attach(this, savedInstanceState);

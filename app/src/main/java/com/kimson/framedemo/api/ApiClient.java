@@ -1,5 +1,6 @@
 package com.kimson.framedemo.api;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.kimson.framedemo.AppConfig;
 import com.kimson.library.util.TextUtils;
 
@@ -42,12 +43,13 @@ public class ApiClient {
 //        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new StethoInterceptor())
+//                .cookieJar(new JavaNetCookieJar(cookieManager))
                 .connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
                 .readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
                 .writeTimeout(WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
                 .addInterceptor(COOKIES_REQUES_INTERCEPTOR)
                 .build();
-//              .cookieJar(new JavaNetCookieJar(cookieManager))
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URLs.API_URL)
@@ -55,6 +57,10 @@ public class ApiClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         API = retrofit.create(ApiService.class);
+    }
+
+    public static ApiService getApiService() {
+        return API;
     }
 
 
