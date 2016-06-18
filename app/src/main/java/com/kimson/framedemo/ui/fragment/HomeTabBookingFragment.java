@@ -6,11 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.kimson.framedemo.ui.NewComActivity;
 import com.kimson.framedemo.ui.base.BaseFragment;
 
 import com.kimson.framedemo.R;
+import com.kimson.framedemo.util.ActivityUtils;
 
 /**
  * Created by zhujianheng on 6/3/16.
@@ -19,13 +22,11 @@ public class HomeTabBookingFragment extends BaseFragment {
 
     public static final String TAG = HomeTabBookingFragment.class.getSimpleName();
 
-    private String content;
-    private TextView mMessage;
+    private Button mNewComp;
 
 
-    public static HomeTabBookingFragment newInstance(String content) {
+    public static HomeTabBookingFragment newInstance() {
         HomeTabBookingFragment fragment = new HomeTabBookingFragment();
-        fragment.content = content;
         return fragment;
     }
 
@@ -41,7 +42,13 @@ public class HomeTabBookingFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Log.e(TAG, ">>>onViewCreated");
         super.onViewCreated(view, savedInstanceState);
-        mMessage = (TextView) view.findViewById(R.id.messageView);
-        mMessage.setText(content);
+        mNewComp = (Button) view.findViewById(R.id.new_componone);
+        mNewComp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Jump to new Component activity
+                ActivityUtils.startActivity(getActivity(), NewComActivity.class);
+            }
+        });
     }
 }

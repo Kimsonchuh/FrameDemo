@@ -1,54 +1,47 @@
-package com.kimson.framedemo.ui.fragment;
+package com.kimson.framedemo.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.kimson.framedemo.R;
-import com.kimson.framedemo.logic.QuestionLogic;
 import com.kimson.framedemo.model.Question;
 import com.kimson.framedemo.model.Result;
-import com.kimson.framedemo.ui.base.BaseFragment;
-import com.kimson.framedemo.ui.base.ListFragment;
+import com.kimson.framedemo.ui.base.ListActivity;
 import com.kimson.framedemo.ui.vh.QuestionViewHolder;
+import com.kimson.library.bind.ViewById;
 import com.kimson.library.widget.DividerItemDecoration;
 import com.kimson.library.widget.Toaster;
 
 import java.util.ArrayList;
 
 /**
- * Created by zhujianheng on 6/3/16.
+ * Created by zhujianheng on 6/18/16.
  */
-public class HomeTabHomeFragment extends ListFragment<QuestionViewHolder, Question, Result<ArrayList<Question>>> {
-    public static final String TAG = HomeTabHomeFragment.class.getSimpleName();
+public class NewComActivity extends ListActivity <QuestionViewHolder, Question, Result<ArrayList<Question>>> {
+    public static final String TAG = NewComActivity.class.getSimpleName();
 
-    public static HomeTabHomeFragment newInstance() {
-        HomeTabHomeFragment fragment = new HomeTabHomeFragment();
-        return fragment;
-    }
+    @ViewById(R.id.toolbar)
+    private Toolbar toolbar;
+    @ViewById(R.id.collapsing_toolbar)
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e(TAG, ">>>onCreateView");
-        View view = inflater.inflate(R.layout.fragment_home_home, container, false);
-        return view;
-    }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        Log.e(TAG, ">>>onViewCreated");
-        super.onViewCreated(view, savedInstanceState);
-        getRecyclerView().addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        getPullToRefreshLayout().setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_comp);
+        setSupportActionBar(toolbar);
+        collapsingToolbarLayout.setTitle("NewCom");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getRecyclerView().addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         initLoader();
     }
 
@@ -67,6 +60,7 @@ public class HomeTabHomeFragment extends ListFragment<QuestionViewHolder, Questi
     public void onBindViewHolder(QuestionViewHolder holder, int position) {
         holder.bind(getItemsSource().get(position));
     }
+
 
     @Override
     public void onLoadStart() {
@@ -101,7 +95,7 @@ public class HomeTabHomeFragment extends ListFragment<QuestionViewHolder, Questi
             if (data.isSuccess()) {
                 if (!mIsLoadingMore) {
                     getItemsSource().clear();
-                    Toaster.showShort(getActivity(), "You have received " + data.getData().size() + " new items");
+                    Toaster.showShort(this, "You have received " + data.getData().size() + " new items");
                 }
                 getItemsSource().addAll(data.getData());
             }
@@ -113,6 +107,6 @@ public class HomeTabHomeFragment extends ListFragment<QuestionViewHolder, Questi
     @Override
     public void onLoadError(Exception e) {
         Log.e(TAG, ">>>onLoadError");
-        Toaster.showShort(getActivity(), "网络异常");
+        Toaster.showShort(this, "网络异常");
     }
 }

@@ -30,5 +30,8 @@
     <string name="home_tab_home">首页</string>
     <string name="home_tab_book">约教练</string>
     <string name="home_tab_me">我的</string>
+    
+    <string name="activity_title_new_component">新控件</string>
+    <string name="activity_title_tabs">Tabs</string>
 
 </resources>

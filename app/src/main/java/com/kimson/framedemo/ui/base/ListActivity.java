@@ -32,4 +32,8 @@ public abstract class ListActivity<VH extends ViewHolder, Item, Result> extends 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
+    @Override
+    public void onLoadComplete(Result data) {
+        mIsLoadMore = false;
+    }
 }

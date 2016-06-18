@@ -47,8 +47,8 @@ public class HomeActivity extends BaseActivity {
 
         List<Fragment> fragments = new ArrayList<>(3);
         fragments.add(HomeTabHomeFragment.newInstance());
-        fragments.add(HomeTabBookingFragment.newInstance("Booking"));
-        fragments.add(HomeTabMeFragment.newInstance("Me"));
+        fragments.add(HomeTabBookingFragment.newInstance());
+        fragments.add(HomeTabMeFragment.newInstance());
 
         bottomBarController = new BottomBarController(savedInstanceState, getSupportFragmentManager(), R.id.container, fragments);
         mBottomBar = BottomBar.attach(this, savedInstanceState);
