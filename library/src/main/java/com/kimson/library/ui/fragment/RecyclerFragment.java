@@ -1,6 +1,7 @@
 package com.kimson.library.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,17 +17,8 @@ import java.util.List;
  */
 public abstract class RecyclerFragment<VH extends RecyclerView.ViewHolder, Item, Result> extends LoaderFragment<Result> {
 
-    protected PullToRefreshLayout mPullToRefreshLayout;
-    protected RecyclerView mRecyclerView;
-
-    protected PullToRefreshLayout.OnRefreshListener mOnRefreshListener = new PullToRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-            RecyclerFragment.this.onRefresh();
-        }
-    };
-
     protected RecyclerView.Adapter<VH> mAdapter = new RecyclerView.Adapter<VH>() {
+
         @Override
         public VH onCreateViewHolder(ViewGroup parent, int viewType) {
             return RecyclerFragment.this.onCreateViewHolder(parent, viewType);
@@ -53,6 +45,19 @@ public abstract class RecyclerFragment<VH extends RecyclerView.ViewHolder, Item,
         }
     };
 
+    protected PullToRefreshLayout mPullToRefreshLayout;
+    protected RecyclerView mRecyclerView;
+
+    //加载更多
+    public boolean mIsLoadingMore = false;
+
+    protected PullToRefreshLayout.OnRefreshListener mOnRefreshListener = new PullToRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            RecyclerFragment.this.onRefresh();
+        }
+    };
+
     private List<Item> mItemsSource;
 
     @Override
@@ -63,11 +68,26 @@ public abstract class RecyclerFragment<VH extends RecyclerView.ViewHolder, Item,
             mPullToRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         }
         mRecyclerView = (RecyclerView) view.findViewById(this.getRecyclerViewId());
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItemPosition = ((LinearLayoutManager)mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                if (lastVisibleItemPosition + 1 == getAdapter().getItemCount()) {
+                    //To call OnRefresh when the RecyclerView scroll to the end
+                    mIsLoadingMore = true;
+                    forceLoad();
+                }
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
     // PullToRefresh
-
     protected PullToRefreshLayout getPullToRefreshLayout() {
         return mPullToRefreshLayout;
     }
@@ -126,4 +146,5 @@ public abstract class RecyclerFragment<VH extends RecyclerView.ViewHolder, Item,
         }
         return mItemsSource;
     }
+
 }

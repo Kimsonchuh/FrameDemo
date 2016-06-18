@@ -42,14 +42,15 @@ public class ApiClient {
 //        CookieManager cookieManager = new CookieManager();
 //        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new StethoInterceptor())
-//                .cookieJar(new JavaNetCookieJar(cookieManager))
-                .connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-                .readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-                .writeTimeout(WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
-                .addInterceptor(COOKIES_REQUES_INTERCEPTOR)
-                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addNetworkInterceptor(new StethoInterceptor())
+//                .connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+//                .readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+//                .writeTimeout(WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+//                .addInterceptor(COOKIES_REQUES_INTERCEPTOR)
+//                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(URLs.API_URL)

@@ -8,5 +8,9 @@ import android.support.v7.widget.RecyclerView;
 public abstract class ListFragment<VH extends RecyclerView.ViewHolder, Item, Result> extends com.kimson.library.ui.fragment.ListFragment<VH, Item, Result> {
     private final String TAG = this.getClass().getSimpleName();
 
+    @Override
+    public void onLoadComplete(Result data) {
+        mIsLoadingMore = false;
+    }
 }
 

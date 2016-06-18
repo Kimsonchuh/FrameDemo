@@ -54,8 +54,7 @@ public class HomeTabHomeFragment extends ListFragment<QuestionViewHolder, Questi
 
     @Override
     public void onRefresh() {
-        getItemsSource().clear();
-        getAdapter().notifyDataSetChanged();
+        Log.e(TAG, ">>>onRefresh");
         forceLoad();
     }
 
@@ -77,14 +76,34 @@ public class HomeTabHomeFragment extends ListFragment<QuestionViewHolder, Questi
     @Override
     public Result<ArrayList<Question>> onLoadInBackground() throws Exception {
         Log.e(TAG, ">>>onLoadInBackground");
-        return QuestionLogic.getQuestionList();
+//        return QuestionLogic.getQuestionList();
+        return getQuestion();
     }
+
+    private Result<ArrayList<Question>> getQuestion () {
+        Result<ArrayList<Question>> result = new Result<>();
+        ArrayList<Question> questions = new ArrayList<>();
+        for (int i = 0; i < 15; i ++) {
+            Question question = new Question();
+            question.setTitle("question" + i);
+            question.setContent("haha" + i);
+            questions.add(question);
+        }
+        result.setStatus("success");
+        result.setData(questions);
+        return result;
+    }
+
 
     @Override
     public void onLoadComplete(Result<ArrayList<Question>> data) {
-        Log.e(TAG, ">>>onLoadComplete");
+        Log.e(TAG, ">>>onLoadComplete；isLoadMore:" + mIsLoadingMore);
         if (data != null) {
             if (data.isSuccess()) {
+                if (!mIsLoadingMore) {
+                    getItemsSource().clear();
+                    Toaster.showShort(getActivity(), "You have received " + data.getData().size() + " new items");
+                }
                 getItemsSource().addAll(data.getData());
             }
         }
