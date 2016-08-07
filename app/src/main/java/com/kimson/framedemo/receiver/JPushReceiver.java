@@ -12,6 +12,8 @@ import java.util.List;
  * Created by zhujianheng on 6/1/16.
  */
 public class JPushReceiver extends BroadcastReceiver {
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
 

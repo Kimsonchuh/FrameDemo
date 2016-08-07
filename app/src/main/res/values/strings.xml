@@ -33,5 +33,6 @@
     
     <string name="activity_title_new_component">新控件</string>
     <string name="activity_title_tabs">Tabs</string>
+    <string name="activity_title_customize_recycleview">自定义RecycleView</string>
 
 </resources>

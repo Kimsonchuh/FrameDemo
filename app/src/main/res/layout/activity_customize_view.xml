@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/page_container"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/primaryRed"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.kimson.framedemo.ui.widget.UberRecycleView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_marginTop="500dp"
+            android:layout_height="800dp"
+            android:clickable="true"
+            android:background="@color/primaryBlue"/>
+    </LinearLayout>
+
+</FrameLayout>

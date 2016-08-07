@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -109,4 +110,6 @@ public class NewComActivity extends ListActivity <QuestionViewHolder, Question, 
         Log.e(TAG, ">>>onLoadError");
         Toaster.showShort(this, "网络异常");
     }
+
+
 }

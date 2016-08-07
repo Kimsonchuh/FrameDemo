@@ -42,8 +42,8 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(null);
-        mToolbar.setNavigationIcon(null);
+//        getSupportActionBar().setTitle(null);
+//        mToolbar.setNavigationIcon(null);
 
         List<Fragment> fragments = new ArrayList<>(3);
         fragments.add(HomeTabHomeFragment.newInstance());

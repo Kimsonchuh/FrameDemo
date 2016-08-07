@@ -43,6 +43,10 @@
             android:label="@string/activity_title_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".ui.CustomizeViewActivity"
+            android:label="@string/activity_title_customize_recycleview"/>
+
     </application>
 
 </manifest>

@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
+import com.kimson.framedemo.ui.CustomizeViewActivity;
 import com.kimson.framedemo.ui.NewComActivity;
 import com.kimson.framedemo.ui.base.BaseFragment;
 
@@ -23,6 +23,7 @@ public class HomeTabBookingFragment extends BaseFragment {
     public static final String TAG = HomeTabBookingFragment.class.getSimpleName();
 
     private Button mNewComp;
+    private Button mCustumize;
 
 
     public static HomeTabBookingFragment newInstance() {
@@ -43,11 +44,19 @@ public class HomeTabBookingFragment extends BaseFragment {
         Log.e(TAG, ">>>onViewCreated");
         super.onViewCreated(view, savedInstanceState);
         mNewComp = (Button) view.findViewById(R.id.new_componone);
+        mCustumize = (Button) view.findViewById(R.id.customize_recycleview);
         mNewComp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Jump to new Component activity
                 ActivityUtils.startActivity(getActivity(), NewComActivity.class);
+            }
+        });
+
+        mCustumize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityUtils.startActivity(getActivity(), CustomizeViewActivity.class);
             }
         });
     }
